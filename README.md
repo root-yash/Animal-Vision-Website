@@ -1,9 +1,9 @@
 # Animal Vision Website
 
 **Version**
-```json
+```
 {
-  'animal-vision': '1.0.0',
+  animal-vision: '1.0.0',
   npm: '8.5.0',
   node: '16.13.2',
   v8: '9.4.146.24-node.14',
