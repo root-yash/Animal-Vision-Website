@@ -1,4 +1,5 @@
 import './Main.css'
-import * as THREE from 'three'
+import Experience from "./Experience/Experience.js"
 
-console.log(THREE)
+const canvas = document.querySelector("canvas.Mainpage")
+const experience = new Experience(canvas)

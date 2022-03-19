@@ -1,6 +1,6 @@
 # Animal Vision Website
 
-**Version**
+####Version
 ```
 {
   animal-vision: '1.0.0',
@@ -34,3 +34,7 @@ run devlopment build
 ```cli
 > npm run dev
 ```
+---
+### Credits
+
+> "Computer Terminal" (https://skfb.ly/6vrwA) by Chris Sweetwood is licensed under Creative Commons Attribution-ShareAlike (http://creativecommons.org/licenses/by-sa/4.0/).
