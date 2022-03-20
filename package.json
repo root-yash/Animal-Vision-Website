@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "build": "webpack --config ./bundler/webpack.prod.js",
-    "dev": "webpack serve --config ./bundler/webpack.dev.js"
+    "dev": "webpack serve --config ./bundler/webpack.dev.js",
+    "deploy": "vercel --prod"
   },
   "author": "",
   "license": "ISC",
@@ -29,5 +30,8 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "vercel": "^24.0.0"
   }
 }
