@@ -17,12 +17,13 @@ export default class Camera
 
     setInstance(position)
     {
-        const gui = new GUI();
+        // const gui = new GUI();
         this.instance = new THREE.PerspectiveCamera(33, this.sizes.width / this.sizes.height, 0.1, 100)
-        gui.add(this.instance.position, "x", -8, 8, 0.001)
-        gui.add(this.instance.position, "y", -8, 8, 0.001)
-        gui.add(this.instance.position, "z", -8, 8, 0.001)
-        gui.add(this.instance, "zoom", -8, 8, 0.001)
+        // gui.add(this.instance.position, "x", -8, 8, 0.001)
+        // gui.add(this.instance.position, "y", -8, 8, 0.001)
+        // gui.add(this.instance.position, "z", -8, 8, 0.001)
+        // gui.add(this.instance, "zoom", -8, 8, 0.001)
+        // gui.hide = true
     
     
         this.instance.position.set(position.position[0], position.position[1], position.position[2])

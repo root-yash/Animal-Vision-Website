@@ -39,7 +39,7 @@ export default class RetroCom extends EventEmitter{
         window.requestAnimationFrame(() =>
         {
             delta = Date.now() - this.currentTime
-            if(delta > 30){
+            if(delta > 2000){
                 return this.screen()
             }
             this.StartComputer()       

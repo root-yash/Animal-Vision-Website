@@ -14,7 +14,7 @@ import typefacefont from "three/examples/fonts/gentilis_regular.typeface.json"
 import RetroCom from './RetroCom/RetroCom.js'
 import ApiResult from '../API/ApiResult.js'
 import EventEmitter from './Utils/EventEmitter.js'
-import { FontLoader } from 'three/examples/jsm/loaders/fontloader'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 let instance = null
 
 export default class Experience extends EventEmitter
