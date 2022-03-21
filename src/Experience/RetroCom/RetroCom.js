@@ -3,6 +3,7 @@ import { PlaneBufferGeometry, Mesh, MeshBasicMaterial, CanvasTexture, Group, Ray
 import GUI from 'lil-gui'
 import EventEmitter from "../Utils/EventEmitter.js";
 import ImageBrowse from "../Utils/ImageBrowse.js";
+import AnimationRetroCam from "./AnimationRetroCam.js";
 export default class RetroCom extends EventEmitter{
     constructor(){
         super()
@@ -13,7 +14,7 @@ export default class RetroCom extends EventEmitter{
         this.resource = this.experience.resources
 
         this.scene.add(this.group)
-        
+
         // when resources (model) is being loaded
         this.resource.on('ready', () =>{
             const plane_geometry = new PlaneBufferGeometry(4,4)
@@ -29,7 +30,13 @@ export default class RetroCom extends EventEmitter{
         
         // Wait 3 sec for computer to start 
         this.currentTime = Date.now()
-        this.StartComputer()        
+        this.StartComputer() 
+        
+        //control how many time keyboard function execute
+        this.keyboardCount = 0
+
+        //control the animation
+        this.AnimationCount = 0
     }
     
     StartComputer(){
@@ -80,7 +87,7 @@ export default class RetroCom extends EventEmitter{
 
         const raycaster = new Raycaster()
         const mouse = new Vector3()
-
+        this.count
         addEventListener("mousedown", (event) =>{
 
             event.preventDefault()
@@ -92,13 +99,25 @@ export default class RetroCom extends EventEmitter{
             const meshObjects = this.MonitorScreen // three.js objects with click handlers we are interested in
 
             var intersects = raycaster.intersectObject(meshObjects);
-
+            
             if(intersects.length > 0){
                 this.word = ""
                 this.ctx.clearRect(-0.144,0.694,1000,1000)
                 this.ctx.fillText("#root >", 10, 20)
                 this.MonitorTexture.needsUpdate = true
-                this.KeyboardListener()
+
+                if (this.keyboardCount == 0){
+                    this.KeyboardListener()
+                    this.keyboardCount ++
+                }
+                if (this.AnimationCount == 0){
+                    this.AnimationCount ++
+                    new AnimationRetroCam(this.experience, {
+                        x : 0,
+                        y : 1.935,
+                        z : 2.845
+                    })
+                }           
             }
              
         })        
@@ -109,7 +128,7 @@ export default class RetroCom extends EventEmitter{
         /**
          * take the input user and perform the operation
          */
-        this.experience.camera.instance.position.set(0, 1.935, 2.845)
+
         const start = "#root >"      
         addEventListener("keypress",(event) =>{
             if(event.key == "Enter"){
