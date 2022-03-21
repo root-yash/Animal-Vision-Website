@@ -29,9 +29,7 @@ export default class RetroCom extends EventEmitter{
         
         // Wait 3 sec for computer to start 
         this.currentTime = Date.now()
-        this.StartComputer()
-        this.on("ClickOnDisplay", this.KeyboardListener())        
-        
+        this.StartComputer()        
     }
     
     StartComputer(){
@@ -100,7 +98,7 @@ export default class RetroCom extends EventEmitter{
                 this.ctx.clearRect(-0.144,0.694,1000,1000)
                 this.ctx.fillText("#root >", 10, 20)
                 this.MonitorTexture.needsUpdate = true
-                this.trigger('ClickOnDisplay')
+                this.KeyboardListener()
             }
              
         })        
@@ -111,7 +109,7 @@ export default class RetroCom extends EventEmitter{
         /**
          * take the input user and perform the operation
          */
-
+        this.experience.camera.instance.position.set(0, 1.935, 2.845)
         const start = "#root >"      
         addEventListener("keypress",(event) =>{
             if(event.key == "Enter"){
@@ -134,6 +132,8 @@ export default class RetroCom extends EventEmitter{
                 if(this.word == "upload"){
                     this.browse = new ImageBrowse() 
                     this.browse.on("imageUploaded",()=>{
+                        this.ctx.fillText("Uploading....",10,40)
+                        this.MonitorTexture.needsUpdate = true
                         this.trigger("readytosent")
                     })                         
                 }

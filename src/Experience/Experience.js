@@ -65,6 +65,8 @@ export default class Experience extends EventEmitter
         })
         
         this.retrocom.on("readytosent", ()=>{
+            this.retrocom.ctx.fillText("Computing the Result",10,60)
+            this.retrocom.MonitorTexture.needsUpdate = true
             this.getResult()
         })
 
