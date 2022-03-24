@@ -248,27 +248,27 @@
         {
             "mimeType" : "image/png",
             "name" : "TerminalMaterial_emissive.png",
-            "uri" : "../textures/TerminalMaterial_emissive.png"
+            "uri" : "./textures/TerminalMaterial_emissive.png"
         },
         {
             "mimeType" : "image/jpeg",
             "name" : "TerminalMaterial_normal.jpg",
-            "uri" : "../textures/TerminalMaterial_normal.jpg"
+            "uri" : "./textures/TerminalMaterial_normal.jpg"
         },
         {
             "mimeType" : "image/jpeg",
             "name" : "TerminalMaterial_metallicRoughness.jpg",
-            "uri" : "../textures/TerminalMaterial_metallicRoughness.jpg"
+            "uri" : "./textures/TerminalMaterial_metallicRoughness.jpg"
         },
         {
             "mimeType" : "image/jpeg",
             "name" : "TerminalMaterial_baseColor.jpg",
-            "uri" : "../textures/TerminalMaterial_baseColor.jpg"
+            "uri" : "./textures/TerminalMaterial_baseColor.jpg"
         },
         {
             "mimeType" : "image/png",
             "name" : "ShadowMaterial_baseColor.png",
-            "uri" : "../textures/ShadowMaterial_baseColor.png"
+            "uri" : "./textures/ShadowMaterial_baseColor.png"
         }
     ],
     "accessors" : [

@@ -8,13 +8,14 @@ import Renderer from './Renderer.js'
 import ResourceLoader from './Utils/ResourceLoader.js'
 
 import sources from './Sources.js'
-import { Color, WebGLRenderer } from 'three'
+import { Color, EqualStencilFunc, WebGLRenderer } from 'three'
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry"
 import typefacefont from "three/examples/fonts/gentilis_regular.typeface.json"
 import RetroCom from './RetroCom/RetroCom.js'
 import ApiResult from '../API/ApiResult.js'
 import EventEmitter from './Utils/EventEmitter.js'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import earth from './earthOutput/earth.js'
 let instance = null
 
 export default class Experience extends EventEmitter
@@ -22,6 +23,7 @@ export default class Experience extends EventEmitter
     constructor(_canvas)
     {
         super()
+        this.whichScene = 1
         // Singleton
         if(instance)
         {
@@ -29,6 +31,8 @@ export default class Experience extends EventEmitter
         }
 
         instance = this
+
+        // if the 
         
         // Global access
         window.experience = this
@@ -41,7 +45,6 @@ export default class Experience extends EventEmitter
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
-        this.scene.background = new Color("#FAC825")
         this.light = new THREE.AmbientLight({
             color: 0xffffff,
             intensity: 0.4
@@ -51,8 +54,17 @@ export default class Experience extends EventEmitter
         this.camera = new Camera({
             "position": [4.9, 2.9, 5.799]
         })
-        this.retrocom = new RetroCom()
+
+        if(this.whichScene == 0){
+            this.computerScene()
+        }
+
+        else{
+            this.earthScene()
+        }
+
         this.renderer = new Renderer()
+        
 
         // Resize event
         this.sizes.on('resize', () =>{
@@ -63,13 +75,28 @@ export default class Experience extends EventEmitter
         this.time.on('tick', () =>{
             this.update()
         })
-        
+
+    }
+
+    computerScene(){
+        this.scene.background = new Color("#FAC825")
+        this.camera = new Camera({
+            "position": [4.9, 2.9, 5.799]
+        })
+        this.retrocom = new RetroCom()
         this.retrocom.on("readytosent", ()=>{
             this.retrocom.ctx.fillText("Computing the Result",10,60)
             this.retrocom.MonitorTexture.needsUpdate = true
-            this.getResult()
+            this.getResult()       
         })
+    }
 
+    earthScene(){
+        this.scene.background = new Color("black")
+        this.camera = new Camera({
+            "position": [4.9, 2.9, 5.799]
+        })
+        this.earth = new earth()
     }
 
     resize()
@@ -106,11 +133,12 @@ export default class Experience extends EventEmitter
                         bevelSize: 0.01,
                         bevelOffset: 0,
                         bevelSegments: 5                    
-                    }
+                    }    
                 )
                 const material = new THREE.MeshBasicMaterial()
                 this.scene.add(new THREE.Mesh(Geometry, material))
             })
+            this.scene.add(this.resources.items.earth.scene)
             this.retrocom = null     
         })  
     }
