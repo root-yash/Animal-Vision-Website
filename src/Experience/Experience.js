@@ -51,9 +51,7 @@ export default class Experience extends EventEmitter
         })
         this.scene.add(this.light)
         this.resources = new ResourceLoader(sources)
-        this.camera = new Camera({
-            "position": [4.9, 2.9, 5.799]
-        })
+        this.camera = new Camera()
 
         if(this.whichScene == 0){
             this.computerScene()

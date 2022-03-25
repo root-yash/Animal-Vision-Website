@@ -8,7 +8,7 @@ export default class RetroCom extends EventEmitter{
     constructor(){
         super()
         this.experience = new Experience()
-
+        this.experience.camera.instance.position.set(4.9, 2.9, 5.799)
         this.scene = this.experience.scene
         this.group = new Group()
         this.resource = this.experience.resources
