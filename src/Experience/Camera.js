@@ -22,7 +22,7 @@ export default class Camera
         gui.add(this.instance.position, "x", -8, 8, 0.001)
         gui.add(this.instance.position, "y", -8, 8, 0.001)
         gui.add(this.instance.position, "z", -8, 8, 0.001)
-        gui.hide = true
+        //gui.hide = false
         this.scene.add(this.instance)
     }
 
