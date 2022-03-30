@@ -17,12 +17,14 @@ export default class Database{
     getData(){
         return {
             // csv file contains scientific name Please change it to common name 
-            "name" : "indian cobra", 
-            "location" : "India",
-            "continent" : "Asia",
-            "Venomous" : "yes",
-            "length" : "2-3 m",
-            "Description": "It is distinct from the king cobra which belong ..." 
+            name : "indian cobra", 
+            location : "India",
+            continent : "Asia",
+            Venomous : "1",
+            length : "2-3 m",
+            Description: "It is distinct from the king cobra which belong ...",
+            latitude: 28,
+            longitude: 77 
         }
     }
 

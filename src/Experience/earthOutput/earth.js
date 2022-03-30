@@ -3,6 +3,7 @@ import { ArrowHelper, AxesHelper, BoxHelper, CameraHelper, Group, PointLight, Sk
 import * as THREE from "three";
 import Experience from "../Experience";
 import EventEmitter from "../Utils/EventEmitter";
+import Database from "../../DataBase/Datafetch.js";
 
 export default class earth extends EventEmitter{
     constructor(){
@@ -90,12 +91,27 @@ export default class earth extends EventEmitter{
     }
 
     earthDetail(){
-        let div = document.createElement("div")
-        div.style = "position: absolute; color: white; left: 100px; top:100px"
-        div.id = 'ClassName';
-        div.innerHTML = 'Hi there!';
-        div.className = 'border pad';
+        // class to get the data from the database class 
+        const DatabaseClass = new Database(0)
+        const DataBaseQuery = DatabaseClass.getData()
 
-        document.body.appendChild(div);
+        // to create element and add it in the body 
+        let divName = document.createElement("div")
+        let divLocation = document.createElement("div")
+        let divContinent = document.createElement("div")
+        let divVenomous = document.createElement("div")
+        let divLength = document.createElement("div")
+        let divDescription = document.createElement("div")
+        let Image = document.createElement("img")
+
+        divName.style = `position: absolute; color: white; left:${window.innerWidth*0.1}px; top:${window.innerHeight*0.15}px`
+        divName.id = 'ClassName'
+        divName.innerHTML = "Name: "+DataBaseQuery.name
+        
+        divLocation.style = `position: absolute; color: white; left:${(window.innerWidth*0.1)}px; top:${(window.innerHeight*0.15)+20}px`
+        divLocation.id = 'ClassLocation'
+        divLocation.innerHTML = "Location: "+DataBaseQuery.location
+        document.body.appendChild(divName)
+        document.body.appendChild(divLocation)
     }
 }
