@@ -19,14 +19,21 @@ export default class earth extends EventEmitter{
         this.groupEarth.add(this.pointLight)
         this.groupEarth.position.set(1.5,0,-1)
         console.log(this.experience.camera.instance)
+        
         // when resources (model) is being loaded
-        this.experience.resources.on('ready', () =>{
-            const model = this.experience.resources.items.earth.scene
-            this.groupEarth.add(model)
-            this.groupEarth.rotation.x = -Math.PI*0.5 
-            this.groupEarth.rotation.z = Math.PI*0.9 
-            this.LocationPointer()
-        })
+        const model = this.experience.resources.items.earth.scene
+        this.groupEarth.add(model)
+        this.groupEarth.rotation.x = -Math.PI*0.5 
+        this.groupEarth.rotation.z = Math.PI*0.9 
+        this.LocationPointer()
+
+        // this.experience.resources.on('ready', () =>{
+        //     const model = this.experience.resources.items.earth.scene
+        //     this.groupEarth.add(model)
+        //     this.groupEarth.rotation.x = -Math.PI*0.5 
+        //     this.groupEarth.rotation.z = Math.PI*0.9 
+        //     this.LocationPointer()
+        // })
         // to stop the camera control 
         this.experience.camera.controls.enabled = false
 
@@ -91,12 +98,17 @@ export default class earth extends EventEmitter{
     }
 
     earthDetail(){
+
+        const width = window.innerWidth
+        const height = window.innerHeight
         // class to get the data from the database class 
         const DatabaseClass = new Database(0)
         const DataBaseQuery = DatabaseClass.getData()
 
         // to create element and add it in the body 
-        let divName = document.createElement("div")
+        let divdetail = document.createElement("div")
+        let details = document.createElement("h1")
+        let Name = document.createElement("div")
         let divLocation = document.createElement("div")
         let divContinent = document.createElement("div")
         let divVenomous = document.createElement("div")
@@ -104,14 +116,46 @@ export default class earth extends EventEmitter{
         let divDescription = document.createElement("div")
         let Image = document.createElement("img")
 
-        divName.style = `position: absolute; color: white; left:${window.innerWidth*0.1}px; top:${window.innerHeight*0.15}px`
-        divName.id = 'ClassName'
-        divName.innerHTML = "Name: "+DataBaseQuery.name
         
-        divLocation.style = `position: absolute; color: white; left:${(window.innerWidth*0.1)}px; top:${(window.innerHeight*0.15)+20}px`
-        divLocation.id = 'ClassLocation'
-        divLocation.innerHTML = "Location: "+DataBaseQuery.location
-        document.body.appendChild(divName)
-        document.body.appendChild(divLocation)
+        divdetail.style = `position: absolute; width:${width*0.20}px; left:${width*0.05}px;top:${height*0.05}px;
+        border-width:2px;
+        border-style:solid;
+        border-color:yellow;
+        border-radius:12px;`
+
+        details.style = `color: white; text-align: center; padding:10px`
+        details.id = "divhead"
+        details.innerHTML = "Details"
+        divdetail.appendChild(details)
+        
+        Image.style = `border-radius: 12px; width:90%; align: center;display: block;margin-left: auto;margin-right: auto;`
+        Image.id = 'ClassImage'
+        Image.src = this.experience.image
+        divdetail.appendChild(Image)
+
+
+        
+        
+        
+
+
+        
+        // divName.style = `color: white;`
+        // divName.id = 'ClassName'
+        // divName.innerHTML = "Name: "+DataBaseQuery.name
+
+        
+        
+        // divLocation.style = `position: absolute; color: white; left:${(width*0.1)}px; top:${(height*0.15)+20}px`
+        // divLocation.id = 'ClassLocation'
+        // divLocation.innerHTML = "Location: "+DataBaseQuery.location
+
+
+
+        document.body.appendChild(divdetail)
+        // document.body.appendChild(divLocation)
+        // document.body.appendChild(Image)
+
+        //console.log(this.experience.image)
     }
 }

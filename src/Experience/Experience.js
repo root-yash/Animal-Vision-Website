@@ -20,10 +20,10 @@ let instance = null
 
 export default class Experience extends EventEmitter
 {
-    constructor(_canvas)
+    constructor(canvas0, canvas1)
     {
         super()
-        this.whichScene = 1
+        this.whichScene = 0
         // Singleton
         if(instance)
         {
@@ -38,8 +38,18 @@ export default class Experience extends EventEmitter
         window.experience = this
 
         // Options
-        this.canvas = _canvas
+        this.canvas = canvas0
+        this.tempcanvas = canvas1
+        
+        // Resource Loader
+        this.resources = new ResourceLoader(sources)
 
+        // setup 
+        this.setup()
+
+    }
+
+    setup(){
         // Setup
         this.debug = new Debug()
         this.sizes = new Sizes()
@@ -50,19 +60,16 @@ export default class Experience extends EventEmitter
             intensity: 0.4
         })
         this.scene.add(this.light)
-        this.resources = new ResourceLoader(sources)
         this.camera = new Camera()
 
         if(this.whichScene == 0){
             this.computerScene()
         }
-
         else{
             this.earthScene()
         }
-
-        this.renderer = new Renderer()
         
+        this.renderer = new Renderer()
 
         // Resize event
         this.sizes.on('resize', () =>{
@@ -73,14 +80,11 @@ export default class Experience extends EventEmitter
         this.time.on('tick', () =>{
             this.update()
         })
-
     }
 
     computerScene(){
         this.scene.background = new Color("#FAC825")
-        this.camera = new Camera({
-            "position": [4.9, 2.9, 5.799]
-        })
+        this.camera = new Camera()
         this.retrocom = new RetroCom()
         this.retrocom.on("readytosent", ()=>{
             this.retrocom.ctx.fillText("Computing the Result",10,60)
@@ -91,9 +95,8 @@ export default class Experience extends EventEmitter
 
     earthScene(){
         this.scene.background = new Color("black")
-        this.camera = new Camera({
-            "position": [4.9, 2.9, 5.799]
-        })
+        this.camera = null
+        this.camera = new Camera()
         this.earth = new earth()
     }
 
@@ -115,29 +118,19 @@ export default class Experience extends EventEmitter
         const apiresult = new ApiResult(this.image)
         apiresult.on("resultRecieved",()=>{
             this.result = JSON.parse(apiresult.result).result
-            this.scene.background = new Color("red")
+            //this.scene.background = new Color("red")
             this.scene.remove(this.retrocom.group)
-            console.log(typefacefont)
-            const fontloader = new FontLoader()
-            fontloader.load("font/helvetiker_regular.typeface.json", (font)=>{
-                const Geometry = new TextGeometry(
-                    this.result, {
-                        font: font,
-                        size: 1,
-                        height: 0.01,
-                        curveSegments: 30,
-                        bevelEnabled: true,
-                        bevelThickness: 0.1,
-                        bevelSize: 0.01,
-                        bevelOffset: 0,
-                        bevelSegments: 5                    
-                    }    
-                )
-                const material = new THREE.MeshBasicMaterial()
-                this.scene.add(new THREE.Mesh(Geometry, material))
-            })
-            this.scene.add(this.resources.items.earth.scene)
-            this.retrocom = null     
+ 
+            //remove first canvas
+            document.body.removeChild(this.canvas)
+
+            //change canvas
+            this.canvas = this.tempcanvas
+
+            // which scene comp or earth 
+            this.whichScene = 1
+            this.setup()
+            //this.retrocom = null     
         })  
     }
 
