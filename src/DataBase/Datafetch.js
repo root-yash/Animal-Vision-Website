@@ -13,6 +13,27 @@ export default class Database{
         this.index = index
         console.log("initiated")
     }
+    
+    fetchData(){
+        var MongoClient = require('mongodb').MongoClient;
+        var url = "mongodb+srv://Abhishek:abhi78ek@cluster0.fozyi.mongodb.net/snakevision?retryWrites=true&w=majority";
+
+        MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("snakevision");
+        dbo.collection("snakedata").findOne({ "Sr_No": this.index }, function(err, result) {
+            if (err) throw err;
+            Name = result.Name;
+            Country = result.country;
+            Genus = result.Genus;
+            Venomous = result.Venomous;
+            Size = result.Size;
+            Details = result.Details;
+
+            db.close();
+        });
+        });
+    }
 
     getData(){
         return {
