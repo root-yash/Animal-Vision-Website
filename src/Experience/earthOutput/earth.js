@@ -3,13 +3,17 @@ import { ArrowHelper, AxesHelper, BoxHelper, CameraHelper, Group, PointLight, Sk
 import * as THREE from "three";
 import Experience from "../Experience";
 import EventEmitter from "../Utils/EventEmitter";
-import Database from "../../DataBase/Datafetch.js";
+import Sizes from "../Utils/Sizes";
 
 export default class earth extends EventEmitter{
     constructor(){
         super()
 
         this.experience = new Experience
+
+        // Detail from the Api
+        const result = this.experience.result
+        console.log(result)
         this.experience.camera.instance.position.set(0, 0, 5)
         this.groupEarth = new Group()
         this.experience.light.intensity = 0.1
@@ -25,7 +29,7 @@ export default class earth extends EventEmitter{
         this.groupEarth.add(model)
         this.groupEarth.rotation.x = -Math.PI*0.5 
         this.groupEarth.rotation.z = Math.PI*0.9 
-        this.LocationPointer()
+        this.LocationPointer(result)
 
         // this.experience.resources.on('ready', () =>{
         //     const model = this.experience.resources.items.earth.scene
@@ -41,19 +45,22 @@ export default class earth extends EventEmitter{
         this.earthControls()  
         
         // this to create details
-        this.earthDetail()
+        this.earthDetail(result)
     }
 
-    LocationPointer(){
+    LocationPointer(result){
         const geometry = new THREE.ConeGeometry( 0.06, 0.2, 4, 1)
         const material = new THREE.MeshBasicMaterial( {color: 0xffff00} )
         const cone = new THREE.Mesh( geometry, material )
         cone.rotation.z = Math.PI
         cone.rotation.y = Math.PI * 0.25
-        cone.rotateOnWorldAxis(new THREE.Vector3(1,0,0), (Math.PI / 180) * 66)
-        cone.rotateOnWorldAxis(new THREE.Vector3(0,0,1),  2*Math.PI + (Math.PI / 180) * 105)
+        // Latitude
+        cone.rotateOnWorldAxis(new THREE.Vector3(1,0,0), (Math.PI / 180) * Number(result.Latitude))
+        // Longitude
+        cone.rotateOnWorldAxis(new THREE.Vector3(0,0,1),  2*Math.PI + (Math.PI / 180) * -Number(result.Longitude))
         cone.translateY(-1.2)        
         this.groupEarth.children[1].add(cone)
+        this.groupEarth.children[1].rotation.z = 2*Math.PI + (Math.PI / 180) * Number(result.Longitude)
         console.log(this.groupEarth.children[1]) 
     }
 
@@ -97,13 +104,12 @@ export default class earth extends EventEmitter{
 
     }
 
-    earthDetail(){
+    earthDetail(result){
+
+        
 
         const width = window.innerWidth
         const height = window.innerHeight
-        // class to get the data from the database class 
-        const DatabaseClass = new Database(0)
-        const DataBaseQuery = DatabaseClass.getData()
 
         // to create element and add it in the body 
         let divdetail = document.createElement("div")
@@ -114,6 +120,7 @@ export default class earth extends EventEmitter{
         let divVenomous = document.createElement("div")
         let divLength = document.createElement("div")
         let divDescription = document.createElement("div")
+        let Description = document.createElement("h2")
         let Image = document.createElement("img")
 
         
@@ -133,29 +140,43 @@ export default class earth extends EventEmitter{
         Image.src = this.experience.image
         divdetail.appendChild(Image)
 
+        Name.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        Name.id = "divName"
+        Name.innerHTML = "Name: "+ result.Name
+        divdetail.appendChild(Name)
 
+        divLocation.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        divLocation.id = 'divlocation'
+        divLocation.innerHTML = 'Location: '+ result.Country
+        divdetail.appendChild(divLocation)
         
-        
-        
+        divVenomous.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        divVenomous.id = 'divVenomous'
+        if (result.Venomous == '1'){
+            divVenomous.innerHTML = 'Venomous: Yes'
+        }
+        else{
+            divVenomous.innerHTML = 'Venomous: No'
+        }
+        divdetail.appendChild(divVenomous)
+
+        divLength.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        divLength.id = 'divlength'
+        divLength.innerHTML = 'Length: '+ result["Size (in cm)"] + " cm"
+        divdetail.appendChild(divLength)
+
+        Description.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        Description.id = 'description'
+        Description.innerHTML = 'Description:'
+        divdetail.appendChild(Description)
 
 
-        
-        // divName.style = `color: white;`
-        // divName.id = 'ClassName'
-        // divName.innerHTML = "Name: "+DataBaseQuery.name
-
-        
-        
-        // divLocation.style = `position: absolute; color: white; left:${(width*0.1)}px; top:${(height*0.15)+20}px`
-        // divLocation.id = 'ClassLocation'
-        // divLocation.innerHTML = "Location: "+DataBaseQuery.location
-
+        divDescription.style = `color: white; text-align: left; padding:10px; font-size: 18px`
+        divDescription.id = 'divdescription'
+        divDescription.innerHTML = result.Details
+        divdetail.appendChild(divDescription)
 
 
         document.body.appendChild(divdetail)
-        // document.body.appendChild(divLocation)
-        // document.body.appendChild(Image)
-
-        //console.log(this.experience.image)
     }
 }

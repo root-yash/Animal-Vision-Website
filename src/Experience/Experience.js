@@ -117,7 +117,9 @@ export default class Experience extends EventEmitter
         this.image = this.retrocom.browse.image
         const apiresult = new ApiResult(this.image)
         apiresult.on("resultRecieved",()=>{
-            this.result = JSON.parse(apiresult.result).result
+
+            this.result = JSON.parse(apiresult.result)
+
             //this.scene.background = new Color("red")
             this.scene.remove(this.retrocom.group)
  
