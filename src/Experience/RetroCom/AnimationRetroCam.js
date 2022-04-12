@@ -4,7 +4,7 @@ export default class AnimationRetroCam{
         
         this.experience = experience
         const position = this.experience.camera.instance.position
-        this.frame = 200
+        this.frame = 1500 / this.experience.time.delta
         const frame = this.frame
         this.xgap = ( finalPosition.x - position.x ) / frame
         this.ygap = ( finalPosition.y - position.y ) / frame 
