@@ -114,8 +114,8 @@ export default class RetroCom extends EventEmitter{
                     this.AnimationCount ++
                     new AnimationRetroCam(this.experience, {
                         x : 0,
-                        y : 1.935,
-                        z : 2.845
+                        y : 1.22,
+                        z : 3.915
                     })
                 }           
             }

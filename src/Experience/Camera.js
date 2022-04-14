@@ -17,7 +17,7 @@ export default class Camera
 
     setInstance()
     {
-        //const gui = new GUI();
+        // const gui = new GUI();
         this.instance = new THREE.PerspectiveCamera(33, this.sizes.width / this.sizes.height, 0.1, 100)
         // gui.add(this.instance.position, "x", -8, 8, 0.001)
         // gui.add(this.instance.position, "y", -8, 8, 0.001)

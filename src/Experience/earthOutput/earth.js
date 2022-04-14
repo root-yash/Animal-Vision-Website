@@ -57,10 +57,10 @@ export default class earth extends EventEmitter{
         // Latitude
         cone.rotateOnWorldAxis(new THREE.Vector3(1,0,0), (Math.PI / 180) * Number(result.Latitude))
         // Longitude
-        cone.rotateOnWorldAxis(new THREE.Vector3(0,0,1),  2*Math.PI + (Math.PI / 180) * -Number(result.Longitude))
+        cone.rotateOnWorldAxis(new THREE.Vector3(0,0,1),  2*Math.PI + (Math.PI / 180) * Number(result.Longitude))
         cone.translateY(-1.2)        
         this.groupEarth.children[1].add(cone)
-        this.groupEarth.children[1].rotation.z = 2*Math.PI + (Math.PI / 180) * Number(result.Longitude)
+        this.groupEarth.children[1].rotation.z = 2*Math.PI + (Math.PI / 180) * -Number(result.Longitude)
         console.log(this.groupEarth.children[1]) 
     }
 
@@ -124,7 +124,7 @@ export default class earth extends EventEmitter{
         let Image = document.createElement("img")
 
         
-        divdetail.style = `position: absolute; width:${width*0.20}px; left:${width*0.05}px;top:${height*0.05}px;
+        divdetail.style = `position: absolute; width:${width*0.25}px; height:${height*0.9}; left:${width*0.05}px;top:${height*0.05}px;
         border-width:2px;
         border-style:solid;
         border-color:yellow;
@@ -135,22 +135,22 @@ export default class earth extends EventEmitter{
         details.innerHTML = "Details"
         divdetail.appendChild(details)
         
-        Image.style = `border-radius: 12px; width:90%; align: center;display: block;margin-left: auto;margin-right: auto;`
+        Image.style = `border-radius: 12px; width:80%; align: center;display: block;margin-left: auto;margin-right: auto;`
         Image.id = 'ClassImage'
         Image.src = this.experience.image
         divdetail.appendChild(Image)
 
-        Name.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        Name.style = `color: white; text-align: left; padding:5px 10px 0px; font-size: 18px`
         Name.id = "divName"
         Name.innerHTML = "Name: "+ result.Name
         divdetail.appendChild(Name)
 
-        divLocation.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        divLocation.style = `color: white; text-align: left; padding:0px 10px 0px; font-size: 18px`
         divLocation.id = 'divlocation'
         divLocation.innerHTML = 'Location: '+ result.Country
         divdetail.appendChild(divLocation)
         
-        divVenomous.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        divVenomous.style = `color: white; text-align: left; padding:0px 10px 0px; font-size: 18px`
         divVenomous.id = 'divVenomous'
         if (result.Venomous == '1'){
             divVenomous.innerHTML = 'Venomous: Yes'
@@ -160,18 +160,18 @@ export default class earth extends EventEmitter{
         }
         divdetail.appendChild(divVenomous)
 
-        divLength.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        divLength.style = `color: white; text-align: left; padding:0px 10px 0px; font-size: 18px`
         divLength.id = 'divlength'
         divLength.innerHTML = 'Length: '+ result["Size (in cm)"] + " cm"
         divdetail.appendChild(divLength)
 
-        Description.style = `color: white; text-align: left; padding:10px; font-size: 20px`
+        Description.style = `color: white; text-align: left; padding:0px 10px 1px; font-size: 18px`
         Description.id = 'description'
         Description.innerHTML = 'Description:'
         divdetail.appendChild(Description)
 
 
-        divDescription.style = `color: white; text-align: left; padding:10px; font-size: 18px`
+        divDescription.style = `color: white; text-align: left; padding:0px 10px 10px; font-size: 16px;`
         divDescription.id = 'divdescription'
         divDescription.innerHTML = result.Details
         divdetail.appendChild(divDescription)
